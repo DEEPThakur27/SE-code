@@ -1,0 +1,49 @@
+#include<iostream>
+#include<graphics.h>
+using namespace std;
+
+
+void DDLalgo(int x1, int y1, int x2, int y2, int color){
+	float dx, dy, steps;
+	float x_int, y_int, x, y;
+	
+	dx=x2-x1;
+	dy=y2-y1;
+	
+	if(abs(dx)>abs(dy)){
+		steps=abs(dx);
+	}
+	else{
+		steps=abs(dy);
+	}
+	
+	x=x1; y=y1;
+	
+	x_int=dx/steps;
+	y_int=dy/steps;
+	
+	for(int i=0; i<steps; i++){
+		putpixel(x, y, color);
+		x=x+x_int;
+		y=y+y_int;
+	}
+	
+}
+
+
+
+
+int main(){
+	int gd=DETECT, gm;
+	initgraph(&gd, &gm, NULL);
+	
+	int x1, x2, y1, y2, r, r1, color;
+	DDLalgo(200, 200, 250, 200, 3);
+	DDLalgo(250, 200, 225, 157, 4);
+	DDLalgo(225, 157, 200, 200, 5);
+	
+	
+	getch();
+	closegraph();
+	return 0;
+}

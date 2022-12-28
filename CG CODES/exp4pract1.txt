@@ -1,0 +1,44 @@
+#include <math.h> 
+#include <graphics.h> 
+#include <iostream>
+
+
+int main(){
+	int gd = DETECT, gm;
+	int angle = 0; 
+	double x, y;
+
+	initgraph(&gd, &gm, NULL);
+	
+	line(0, getmaxy() / 2, getmaxx(), getmaxy() / 2);
+/* generate a sine wave */
+	
+	for(x = 0; x < getmaxx(); x+=3) {
+/* calculate y value given x */
+		int temp_angle=angle;
+		if(angle>(180) && angle<(180){
+			temp_angle=360-angle;
+			y =50*sin(temp_angle*3.141/180);
+			y = getmaxy()/2 - y;
+/* color a pixel at the given position */
+			putpixel(x, y, 15);
+			delay(100);	
+			temp_angle+=5;
+			angle+=5;
+		}
+		else{
+			y =50*sin(angle*3.141/180);
+			y = getmaxy()/2 - y;
+/* color a pixel at the given position */
+			putpixel(x, y, 15);
+			delay(100);
+/* increment angle */
+			angle+=5;
+		}
+	}
+/* deallocate memory allocated for graphics screen */
+closegraph();
+return 0;
+}
+
+

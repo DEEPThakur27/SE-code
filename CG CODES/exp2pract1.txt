@@ -1,0 +1,77 @@
+#include<iostream>
+#include<graphics.h>
+#include<conio.h>
+using namespace std;
+
+void Window(){
+	line(150, 300, 400, 300);
+	line(400, 300, 400, 400);
+	line(400, 400, 150, 400);
+	line(150, 400, 150, 300);
+}
+
+void codes(char c[], float x, float y){
+	
+	c[0]=(y>300) ? '0':'1';
+	c[1]=(y<400) ? '0':'1';
+	c[2]=(x<400) ? '0':'1';
+	c[3]=(x>150) ? '0':'1';
+}
+
+
+void clipping(char c[], char d[], float &x, float &y,float m){
+	int flag=1;
+	for(int i=0; i<4; i++){
+		if(c[i]!='0' && d[i]!='0'){
+			flag=0;
+			break;
+		}
+		if(flag){
+			if(c[0]!='0'){
+				x=x+(300-y)/m;
+				y=300;
+			}
+			else if(c[1]!='0'){
+				x=x+(400-y)/m;
+				y=400;
+			}
+			else if(c[2]!='0'){
+				y=y+(400-x)*m;
+				x=400;
+			}
+			else{
+				y=y+(150-x)*m;
+				x=150;
+			}
+		}
+	}
+	if(flag==0){
+		cout<<"The line lies outside the window";
+	}
+}
+
+
+int main(){
+	int gd=DETECT, gm;
+	initgraph(&gd, &gm, NULL);
+	float x1, y1, x2, y2, m;
+	char c[4], d[4];
+	Window();
+	cout<<"Enter coordinates: ";
+	cin>> x1>>y1>> x2>> y2;
+	cout<<"Before clipping";
+	line(x1, y1, x2, y2);
+	getch();
+	cleardevice();
+	codes(c, x1, y1);
+	codes(d, x2, y2);
+	m=float((y2-y1)/ (x2-x1));
+	clipping(c, d, x1, y1, m);
+	clipping(d, c, x2, y2, m);
+	cout<<"after clipping";
+	Window();
+	line(x1, y1, x2, y2);
+	getch();
+	closegraph();
+	return 0;
+}

@@ -1,0 +1,84 @@
+#include<iostream>
+#include<graphics.h>
+using namespace std;
+
+class scan{
+	public:
+	int x[20], y[20], k;
+	float slope[20], x_line[20];
+	void scan_fill(int n);
+};
+
+void scan:: scan_fill(int n){
+	float dx, dy;
+	
+	x[n]=x[0];
+	y[n]=y[0];
+	//make polygon
+	for(int i=0; i<n; i++){
+		line(x[i], y[i], x[i+1], y[i+1]);
+	}
+		
+	//find slope
+	for(int i=0; i<n; i++){
+		dx=x[i+1]-x[i];
+		dy=y[i+1]-y[i];
+		
+		if(dy==0){
+			slope[i]=1;				// because we want 1/slope
+		}
+		else if(dx==0){
+			slope[i]=0;
+		}
+		else{
+			slope[i]=dx/dy;
+		}
+	}
+	
+	for(int p=0; p<500; p++){
+		k=0;
+		for(int i=0; i<n; i++){
+		if((y[i]>p && y[i+1]<=p) || (y[i]<=p && y[i+1]>p)){
+			x_line[k]=x[i]+ slope[i]*(p-y[i]);				// why? 
+			k++;
+		}
+		}
+		
+		//bubble sort
+		for(int i=k-1; i>0; i--){
+			for(int j=0; j<i; j++){
+				if(x_line[j]>x_line[j+1]){
+					int temp= x_line[j];
+					x_line[j]=x_line[j+1];
+					x_line[j+1]=temp;
+				}
+			}
+		}
+		
+		//make pairs and fill in colour using line
+		for(int i=0; i<k; i=i+2){
+			setcolor(BLUE);
+			line(x_line[i], p, x_line[i+1], p);			
+		}
+	}
+	
+}
+
+
+int main(){
+	int n;
+	scan obj1;
+	cout<<"Enter no of edges";
+	cin>>n;
+	for(int i=0; i<n; i++){
+		cout<<"Enter x and y coordinates: ";
+		cin>>obj1.x[i]>>obj1.y[i];
+	}
+	
+	int gd=DETECT,gm;
+	initgraph(&gd, &gm, " ");
+	obj1.scan_fill(n);
+	getch();
+	closegraph();
+	return 0; 
+}

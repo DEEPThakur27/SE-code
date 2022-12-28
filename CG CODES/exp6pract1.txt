@@ -1,0 +1,55 @@
+#include<iostream>
+#include<graphics.h>
+#include<conio.h>
+using namespace std;
+
+int main(){
+	int gd=DETECT, gm;
+	initgraph(&gd, &gm, NULL);
+	
+	
+	setbkcolor(BLUE);
+	setcolor(RED);
+	outtextxy(240, 250, "::::PRESS ANY KEY TO CONTINUE::::");
+	while(!kbhit());
+	
+	int x=getmaxx(), y= getmaxy();
+	setcolor(BLACK);
+	for(int i=30, j=2*y/3; i<x/2, j>30; i++, j--){
+		delay(50);
+		cleardevice();
+		if(i<=x/4){
+			setfillstyle(SOLID_FILL, YELLOW);
+			fillellipse(i, j, 20, 20);
+		}
+		else{
+			setfillstyle(SOLID_FILL, GREEN^RED);
+			fillellipse(i, j, 20, 20);
+		}
+	}
+	
+	cleardevice();
+	setfillstyle(SOLID_FILL, RED);
+	fillellipse(x/2, 30, 20, 20);
+	delay(100);
+	
+	for(int i=x/2, j=30; i<x, j<2*y/3; i++, j++){
+		delay(50);
+		cleardevice();
+		if(i>=3*x/4){
+			setfillstyle(SOLID_FILL, GREEN^RED);
+			fillellipse(i, j, 20, 20);
+		}
+		else{
+			setfillstyle(SOLID_FILL, YELLOW);
+			fillellipse(i, j, 20, 20);
+		}
+	}
+	
+	
+	
+	
+	getch();
+	closegraph();
+	return 0;
+}

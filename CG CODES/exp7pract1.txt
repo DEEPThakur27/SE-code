@@ -1,0 +1,38 @@
+#include <math.h> 
+#include<graphics.h> 
+#include <iostream>
+
+
+int main() {
+int gd = DETECT, gm;
+int angle = 0; 
+double x, y;
+
+	
+	
+	
+	initgraph(&gd, &gm, NULL);
+line(0, (getmaxy() / 2)+10, getmaxx(), (getmaxy() / 2)+10);
+/* generate a sine wave */
+for(x = 0; x < getmaxx(); x+=3) {
+	if(angle>180){			// condition for sine squre wave
+		angle=0;
+	}
+/* calculate y value given x */
+line(0, (getmaxy() / 2)+10, getmaxx(), (getmaxy() / 2)+10);
+y =50*sin(angle*3.141/180);
+y = getmaxy()/2 - y;
+/* color a pixel at the given position */
+//putpixel(x, y, 15);
+setfillstyle(SOLID_FILL, RED);
+fillellipse(x, y, 10, 10);
+delay(100);
+cleardevice();
+/* increment angle */
+angle+=5;
+}
+/* deallocate memory allocated for graphics screen */
+getch();
+closegraph();
+return 0;
+}
